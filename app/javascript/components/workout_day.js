@@ -5,22 +5,29 @@ import Header from './header';
 
 const workoutDays = require('../../javascript/workoutDays.json');
 
-console.log(workoutDays.find(i => i.id === "0").exercises);
-
-const workoutDayId = location.hash.split("/")[2];
-
-const headerTitle = workoutDays.find(x => x.id === workoutDayId).muscleSet;
-
-
 class WorkoutDay extends React.Component {
-  componentWillReceiveProps() {
-    const workoutDays = require('../../javascript/workoutDays.json');
+  constructor(props) {
+    super(props);
 
-    console.log(workoutDays.find(i => i.id === "0").exercises);
+    this.workoutId = props.location.pathname.split('/')[2];
 
-    const workoutDayId = location.hash.split("/")[2];
+    this.workoutDay = workoutDays.find(x => x.id === this.workoutId);
 
-    const headerTitle = workoutDays.find(x => x.id === workoutDayId).muscleSet;
+    this.exercises = this.workoutDay.exercises;
+
+    this.headerTitle = this.workoutDay.muscleSet;
+  }
+
+  createSet = (sets, reps) => {
+    let workoutSets = [];
+
+    for (let i = 0; i < sets; i++) {
+      workoutSets.push(
+        <div className="workoutDay__rep" key={ reps + i } />
+      )
+    }
+
+    return workoutSets;
   };
 
   render() {
@@ -28,58 +35,24 @@ class WorkoutDay extends React.Component {
       <div>
         <Link to={ '/' }>
           <Header
-            title={ headerTitle }
+            title={ this.headerTitle }
           />
         </Link>
-        <div className="workoutDay__exercise">
-          <div className="workoutDay__exercise-name">
-            Squat
-          </div>
-          <div className="workoutDay__weight">
-            5x5
-            35kg
-          </div>
-          <div className="workoutDay__set">
-            <div className="workoutDay__rep">
-              5
+        {this.exercises.map((exercise, i) => {
+          return (
+            <div className="workoutDay__exercise" key={ i }>
+              <div className="workoutDay__exercise-name" key={ exercise.exerciseName }>
+                { exercise.exerciseName }
+              </div>
+              <div className="workoutDay__weight" key={ exercise.weight + i }>
+                { `${exercise.sets} x ${exercise.reps} ${exercise.weight}kg`  }
+              </div>
+              <div className="workoutDay__set" key={ exercise.sets + i} >
+                {this.createSet(exercise.sets, exercise.reps)}
+              </div>
             </div>
-            <div className="workoutDay__rep">
-              5
-            </div>
-            <div className="workoutDay__rep">
-              5
-            </div>
-            <div className="workoutDay__rep">
-              5
-            </div>
-            <div className="workoutDay__rep">
-              5
-            </div>
-          </div>
-        </div>
-        <div className="workoutDay__exercise">
-          <div className="workoutDay__exercise-name">
-            Leg Extension
-          </div>
-          <div className="workoutDay__weight">
-            4x12
-            20kg
-          </div>
-          <div className="workoutDay__set">
-            <div className="workoutDay__rep">
-              12
-            </div>
-            <div className="workoutDay__rep">
-              12
-            </div>
-            <div className="workoutDay__rep">
-              12
-            </div>
-            <div className="workoutDay__rep">
-              12
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     )
   }
