@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "0",
     "date": "Fri 1 Mar",
     "muscleSet": "Legs",
     "exercises": [
@@ -19,7 +19,7 @@
     ]
   },
   {
-    "id": "2",
+    "id": "1",
     "date": "Fri 2 Mar",
     "muscleSet": "Arms",
     "exercises": [{
