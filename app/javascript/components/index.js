@@ -6,7 +6,6 @@ import Home from '../components/home';
 import WorkoutDay from '../components/workout_day';
 import Exercise from '../components/exercise';
 
-
 const Index = () => (
   <Router>
     <Switch>

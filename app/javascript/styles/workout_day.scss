@@ -20,12 +20,20 @@
   &__rep {
     background-color: $white;
     border-radius: 2em;
-    color: $white;
+    color: $black;
     display: flex;
     flex-direction: column;
     height: 10vw;
     justify-content: center;
     text-align: center;
     width: 10vw;
+  }
+
+  &__complete {
+    background-color: $turquoise;
+    color: $white;
+    font-size: 1em;
+    margin-top: 1em;
+    padding: 0.5em;
   }
 }
