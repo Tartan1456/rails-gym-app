@@ -4,32 +4,39 @@ import { Link } from 'react-router-dom'
 import Header from './header';
 import SetsContainer from './sets_container';
 
-const workoutDays = require('../../javascript/workoutDays.json');
-
 class WorkoutDay extends React.Component {
   constructor(props) {
     super(props);
 
     this.workoutId = props.location.pathname.split('/')[2];
 
-    this.workoutDay = workoutDays.find(x => x.id === this.workoutId);
+    this.state = {
+      headerTitle: '',
+      exercises: [],
+    }
+  }
 
-    this.exercises = this.workoutDay.exercises;
-
-    this.date = this.workoutDay.date;
-
-    this.headerTitle = this.workoutDay.muscleSet;
+  componentDidMount() {
+    fetch(`/api/workouts/${this.workoutId}`)
+    .then(response => response.json())
+    .then(response => {
+      this.setState({
+        headerTitle: response.muscleset,
+        ...response,
+      })
+    });
   }
 
   render() {
+    const { headerTitle, exercises } = this.state;
     return (
       <div>
         <Link to={ '/' }>
           <Header
-            title={ this.headerTitle }
+            title={ headerTitle }
           />
         </Link>
-        {this.exercises.map((exercise, i) => {
+        {exercises.map((exercise, i) => {
           return (
             <SetsContainer
               { ...exercise }

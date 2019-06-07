@@ -1,3 +1,3 @@
 class WorkoutDay < ApplicationRecord
-  has_many :exercise
+  has_many :target
 end

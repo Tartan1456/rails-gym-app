@@ -10,22 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_24_144943) do
+ActiveRecord::Schema.define(version: 2019_06_07_143153) do
 
   create_table "exercises", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "exerciseName"
+    t.string "name"
+  end
+
+  create_table "results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "complete"
+    t.datetime "date"
+    t.integer "target_id"
+  end
+
+  create_table "targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "workout_day_id"
+    t.integer "exercise_id"
     t.integer "sets"
     t.integer "reps"
-    t.integer "weight"
+    t.float "weight", limit: 53
   end
 
   create_table "workout_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "date"
-    t.string "muscleset"
+    t.string "name"
   end
 
 end

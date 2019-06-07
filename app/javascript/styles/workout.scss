@@ -1,6 +1,6 @@
 .workouts-wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto;
   grid-gap: 1em;
   padding: 1.6em;
 }

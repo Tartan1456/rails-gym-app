@@ -15,11 +15,11 @@ class WorkoutContainer extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/workouts?id=1')
+    fetch('/api/workouts')
     .then(response => response.json())
     .then(response => {
       this.setState({
-        workoutDays: [response],
+        workoutDays: response,
       })
     });
   }
@@ -38,14 +38,14 @@ class WorkoutContainer extends Component {
                 key={ i }
                 { ...workoutDay }
               >
-                {/* {workoutDay.exercises.map((exercise, i) => {
+                {workoutDay.exercises.map((exercise, i) => {
                   return (
                     <Exercise
                       key={ i }
                       { ...exercise }
                     />
                   );
-                })} */}
+                })}
               </Workout>
             </Link>
           )

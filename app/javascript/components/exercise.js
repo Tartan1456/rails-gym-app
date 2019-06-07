@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Exercise = ({ exerciseName, sets, reps, weight }) => (
+const Exercise = ({ name, sets, reps, weight }) => (
   <div className='workout__exercise'>
     <div className='workout__exercise-name'>
-      { exerciseName }
+      { name }
     </div>
     <div className='workout__sets'>
       { sets + 'x' + reps }
