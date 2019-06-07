@@ -35,7 +35,16 @@ module Api
         id: @workout_day.id,
         date: @workout_day.created_at.strftime('%a %e %b'),
         muscleset: @workout_day.name,
-        exercises: @workout_day.target.includes(:exercise).map { |target| { id: target.id, name: target.exercise.name, sets: target.sets, reps: target.reps, weight: target.weight} },
+        exercises: @workout_day.target.includes(:exercise, :result).map { |target|
+          {
+            id: target.id,
+            name: target.exercise.name,
+            sets: target.sets,
+            reps: target.reps,
+            weight: target.weight,
+            complete: target.result.first != nil ? target.result.first.complete : false,
+          }.compact
+        },
       }
     end
   end

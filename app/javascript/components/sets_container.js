@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 
 import Set from './set';
 
-export default function SetContainer({ name, sets, reps, weight, i, id, targetId, date }) {
+export default function SetContainer({ name, sets, reps, weight, i, id, complete, date }) {
   const lsId = id + name + date;
-  const initialComplete = () => Boolean(localStorage.getItem(lsId) || false);
-  const [complete, setCompleteState] = useState(initialComplete);
+  const initialComplete = () => Boolean(complete);
+  const [setComplete, setCompleteState] = useState(initialComplete);
   const isInitialMount = useRef(true);
 
   const createSet = (sets, reps, date, name) => {
@@ -24,10 +24,9 @@ export default function SetContainer({ name, sets, reps, weight, i, id, targetId
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      //localStorage.setItem(lsId, complete);
-      postToResults(id, complete);
+      postToResults(id, setComplete);
     }
-  }, [complete]);
+  }, [setComplete]);
 
   const completeSet = () => {
     setCompleteState(true);
@@ -42,8 +41,8 @@ export default function SetContainer({ name, sets, reps, weight, i, id, targetId
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        complete,
-        date: Date.now(),
+        complete: setComplete,
+        date: new Date().toISOString().slice(0, 19).replace('T', ' '),
         target_id: id,
       })
     })
@@ -58,8 +57,12 @@ export default function SetContainer({ name, sets, reps, weight, i, id, targetId
       <div className="workoutDay__weight" key={ weight + i }>
         { `${sets} x ${reps} ${weight}kg`  }
       </div>
-      { !complete
+      { complete || setComplete
         ?
+          <div className="workoutDay__set" key={ sets + i } >
+            Complete
+          </div>
+        :
           <Fragment>
             <div className="workoutDay__set" key={ sets + i } >
               { createSet(sets, reps, date, name) }
@@ -71,10 +74,6 @@ export default function SetContainer({ name, sets, reps, weight, i, id, targetId
               Finished
             </button>
           </Fragment>
-        :
-          <div className="workoutDay__set" key={ sets + i } >
-            Complete
-          </div>
       }
     </div>
   )

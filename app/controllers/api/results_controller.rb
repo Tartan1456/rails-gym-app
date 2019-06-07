@@ -27,6 +27,7 @@ module Api
     # POST /results.json
     def create
       @result = Result.find_or_create_by(target_id: result_params[:target_id]) do |result|
+        result.date = result_params[:date]
         result.complete = result_params[:complete]
         result.save
       end
