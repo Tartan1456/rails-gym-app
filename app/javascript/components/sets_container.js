@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 
 import Set from './set';
 
-export default function SetContainer({ name, sets, reps, weight, i, date }) {
-  const lsId = date + name + weight;
+export default function SetContainer({ name, sets, reps, weight, i, id, targetId, date }) {
+  const lsId = id + name + date;
   const initialComplete = () => Boolean(localStorage.getItem(lsId) || false);
   const [complete, setCompleteState] = useState(initialComplete);
   const isInitialMount = useRef(true);
@@ -24,12 +24,30 @@ export default function SetContainer({ name, sets, reps, weight, i, date }) {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      localStorage.setItem(lsId, complete);
+      //localStorage.setItem(lsId, complete);
+      postToResults(id, complete);
     }
   }, [complete]);
 
   const completeSet = () => {
     setCompleteState(true);
+  }
+
+  const postToResults = (id) => {
+    fetch('/api/results', {
+      method: 'POST',
+      mode: 'same-origin',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        complete,
+        date: Date.now(),
+        target_id: id,
+      })
+    })
+    .then(response => response.json());
   }
 
   return (

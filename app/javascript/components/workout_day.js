@@ -28,7 +28,7 @@ class WorkoutDay extends React.Component {
   }
 
   render() {
-    const { headerTitle, exercises } = this.state;
+    const { headerTitle, exercises, date } = this.state;
     return (
       <div>
         <Link to={ '/' }>
@@ -40,9 +40,9 @@ class WorkoutDay extends React.Component {
           return (
             <SetsContainer
               { ...exercise }
-              date={ this.date }
+              date={ date }
               key={ i }
-              i = { i }
+              i= { i }
             />
           );
         })}
