@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_07_143153) do
+ActiveRecord::Schema.define(version: 2019_06_10_144241) do
 
   create_table "exercises", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_06_07_143153) do
     t.boolean "complete"
     t.datetime "date"
     t.integer "target_id"
+    t.boolean "passed"
   end
 
   create_table "targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

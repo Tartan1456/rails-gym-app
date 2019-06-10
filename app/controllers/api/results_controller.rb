@@ -29,6 +29,7 @@ module Api
       @result = Result.find_or_create_by(target_id: result_params[:target_id]) do |result|
         result.date = result_params[:date]
         result.complete = result_params[:complete]
+        result.passed = result_params[:passed]
         result.save
       end
 
@@ -73,7 +74,7 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def result_params
-        params.require(:result).permit(:complete, :target_id, :date)
+        params.require(:result).permit(:complete, :target_id, :date, :passed)
       end
   end
 end
