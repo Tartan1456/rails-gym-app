@@ -46,6 +46,9 @@ class WorkoutDay extends React.Component {
             />
           );
         })}
+        <Link to={ `${this.workoutId}/edit` }>
+          <button>Edit</button>
+        </Link>
       </div>
     )
   }
